@@ -16,15 +16,15 @@ export default {
     const route = useRoute()
     const menuItemPath = [
       { path: '/home/upload', text: '上传文件' },
-      { path: '/home/myfiles', text: '我的文件' },
+      { path: '/home/myfiles', text: '我的文件' }
     ]
     const defaultMenu = ref(menuItemPath[0].path)
     const menuItemPathRef = ref(menuItemPath)
-    
+
     watch(
       () => route.path,
       () => {
-        if (menuItemPath.includes(route.path)) {
+        if (menuItemPath.find(() => route.path === menuItemPath.path)) {
           defaultMenu.value = route.path
         }
       },
