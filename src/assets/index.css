@@ -1,6 +1,17 @@
-html, body, #app {
+html,
+body,
+#app {
   height: 100%;
   font-size: 12px;
+}
+
+:root {
+  --el-color-primary: hsl(155, 100%, 36%);
+  --el-color-primary-light-3: hsl(155, 100%, 40%);
+  --el-color-primary-light-5: hsl(155, 100%, 45%);
+  --el-color-primary-light-7: hsl(155, 100%, 89%);
+  --el-color-primary-light-8: hsl(155, 100%, 93%);
+  --el-color-primary-light-9: hsl(155, 100%, 96%);
 }
 
 body {
