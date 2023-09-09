@@ -5,12 +5,20 @@ const gaodeHttp = axios.create({
   timeout: 1000,
 })
 
-const http = axios.create({
+const MockHttp = axios.create({
   baseURL: 'http://127.0.0.1:4523/m1/3149923-0-default',
   timeout: 1000,
 })
 
+const selfServer = axios.create({
+  baseURL: 'http://localhost:8080',
+  headers: {
+    'pjw': 'asf'
+  }
+})
+
 export {
   gaodeHttp,
-  http
+  MockHttp as http,
+  selfServer
 }
