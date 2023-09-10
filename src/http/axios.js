@@ -10,6 +10,16 @@ const MockHttp = axios.create({
   timeout: 1000,
 })
 
+MockHttp.interceptors.request.use(
+  (config) => {
+    console.log(config)
+    if (config.url !== '/login') {
+      config.headers['token'] = localStorage.getItem('token')
+    }
+    return config
+  }
+)
+
 const selfServer = axios.create({
   baseURL: 'http://localhost:8080',
   headers: {

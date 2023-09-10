@@ -25,9 +25,11 @@
       </el-table-column>
       <el-table-column prop="fileUpdateTime" label="文件最近更新时间" width="150" />
       <el-table-column fixed="right" label="操作" width="200">
-        <template #default>
-          <el-button type="primary" size="small">下载</el-button>
-          <el-button type="primary" size="small">复制分享链接</el-button>
+        <template #default="scope">
+          <el-button type="primary" size="small" @click="downImg(scope)">下载</el-button>
+          <el-button type="primary" size="small" @click="copyShareLink(scope)"
+            >复制分享链接</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -36,6 +38,7 @@
 
 <script>
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
 export default {
   setup() {
     const tableData = ref([
@@ -43,27 +46,41 @@ export default {
         uid: '1',
         filename: 'qq截图',
         fileSize: '20k',
-        fileUrl: 'http://www.baidu.com',
+        fileUrl: 'http://127.0.0.1:8080/test.txt',
         fileUpdateTime: '2023年9月10日'
       },
       {
         uid: '2',
         filename: 'qq截图',
         fileSize: '20k',
-        fileUrl: 'http://www.baidu.com',
+        fileUrl: 'http://www.zhihu.com',
         fileUpdateTime: '2023年9月10日'
       },
       {
         uid: '3',
         filename: 'qq截图',
         fileSize: '20k',
-        fileUrl: 'http://www.baidu.com',
+        fileUrl: 'http://www.aaa.com',
         fileUpdateTime: '2023年9月10日'
       }
     ])
 
+    function copyShareLink(lineInfo) {
+      navigator.clipboard.writeText(lineInfo.row.fileUrl)
+      ElMessage({
+        message: '已成功复制到剪贴板',
+        type: 'success'
+      })
+    }
+
+    function downImg(lineInfo) {
+      window.open(lineInfo.row.fileUrl)
+    }
+
     return {
-      tableData
+      tableData,
+      copyShareLink,
+      downImg
     }
   }
 }

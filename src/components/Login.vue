@@ -12,13 +12,13 @@ export default {
   setup() {
     const router = useRouter()
     async function login() {
-      const {data: res} = await http.post('/registry', null, {
-        params: {
-          username: userId.value || '',
-          password: '2345'
-        }
+      const { data: res } = await http.post('/login', {
+        username: userId.value || '',
+        password: '2345'
       })
-      console.log(res)
+      // 用户token保存
+      localStorage.setItem('token', res.data.token)
+      console.log(localStorage.getItem('token'))
       // 跳转到首页
       router.push({
         name: 'home',

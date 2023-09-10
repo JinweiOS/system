@@ -32,4 +32,18 @@ const router = createRouter({
   routes, // `routes: routes` 的缩写
 })
 
+router.beforeEach(async (to) => {
+  // 必须是home&valid不合法
+  // 有没要必要发起一个请求，验证token是否过期？
+  const validResult = localStorage.getItem('token')
+  // 不是太有必要，所有的请求都需要带上token
+  // 如果home页面一个请求都没有，需要做
+  // 如果有请求，不需要做
+  if (to.path === '/home' && !validResult) {
+    return {
+      path: '/login'
+    }
+  }
+})
+
 export default router
