@@ -6,6 +6,7 @@ const server = http.createServer((req, res) => {
   console.log(req.method.toLowerCase())
   if (req.method.toLowerCase() === 'post') {
     req.on('data', (chunk) => {
+      // stream(数据流)
       fileBase64 += chunk.toString()
     })
     req.on('end', () => {

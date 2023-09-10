@@ -3,7 +3,8 @@ import LoginComp from '@/components/Login.vue'
 import MainComp from '@/components/Main.vue'
 import HomeComp from '@/components/Home.vue'
 import UploadComp from '@/components/biz/Upload.vue'
-import MyfileComp from '@/components/biz/Myfile.vue'
+import UploadFileComp from '@/components/biz/UploadFile.vue'
+import FileListComp from '@/components/biz/FileList.vue'
 
 const routes = [
   { path: '/', name: 'main', component: MainComp },
@@ -13,8 +14,9 @@ const routes = [
     name: 'home',
     component: HomeComp,
     children: [
-      { path: 'upload', component: UploadComp },
-      { path: 'myfiles', component: MyfileComp },
+      { path: 'upload', component: UploadFileComp },
+      { path: 'myfiles', component: FileListComp },
+      { path: 'demo', component: UploadComp }
     ]
   },
   // 测试如何在setup函数中获取路由参数
