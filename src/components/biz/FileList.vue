@@ -33,37 +33,41 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      v-model:current-page="currentPage"
+      small
+      background
+      layout="prev, pager, next"
+      :total="total"
+      @current-change="pageChange"
+    />
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { ElMessage } from 'element-plus'
+import { http } from '@/http/axios.js'
 export default {
   setup() {
-    const tableData = ref([
-      {
-        uid: '1',
-        filename: 'qq截图',
-        fileSize: '20k',
-        fileUrl: 'http://127.0.0.1:8080/test.txt',
-        fileUpdateTime: '2023年9月10日'
-      },
-      {
-        uid: '2',
-        filename: 'qq截图',
-        fileSize: '20k',
-        fileUrl: 'http://www.zhihu.com',
-        fileUpdateTime: '2023年9月10日'
-      },
-      {
-        uid: '3',
-        filename: 'qq截图',
-        fileSize: '20k',
-        fileUrl: 'http://www.aaa.com',
-        fileUpdateTime: '2023年9月10日'
-      }
-    ])
+    const tableData = ref([])
+    const currentPage = ref(1)
+    const total = ref(0)
+    const SIZE = 20
+    async function getTableData(size, curPage) {
+      const { data: res } = await http.get('/img/list', {
+        params: {
+          pageSize: size,
+          pageNum: curPage
+        }
+      })
+      tableData.value = res.data.items
+      total.value = res.data.totalSize
+    }
+
+    onMounted(() => {
+      getTableData(SIZE, currentPage.value)
+    })
 
     function copyShareLink(lineInfo) {
       navigator.clipboard.writeText(lineInfo.row.fileUrl)
@@ -77,10 +81,18 @@ export default {
       window.open(lineInfo.row.fileUrl)
     }
 
+    function pageChange(curPage) {
+      console.log(curPage)
+      getTableData(SIZE, curPage)
+    }
+
     return {
       tableData,
       copyShareLink,
-      downImg
+      downImg,
+      total,
+      currentPage,
+      pageChange
     }
   }
 }

@@ -12,6 +12,10 @@ export default {
   setup() {
     const router = useRouter()
     async function login() {
+      // const formData = new FormData()
+      // formData.append('username', userId.value || '')
+      // formData.append('password', '234y')
+      // const { data: res } = await http.post('/login', formData)
       const { data: res } = await http.post('/login', {
         username: userId.value || '',
         password: '2345'
