@@ -18,6 +18,7 @@
 <script>
 import { onMounted, onUnmounted, ref } from 'vue'
 import { selfServer } from '@/http/axios.js'
+import {ElMessage} from 'element-plus'
 export default {
   name: 'MyfileComp',
   setup() {
@@ -55,8 +56,14 @@ export default {
     }
 
     // formdata 表单上传文件
-    function testServer() {
-      selfServer.post('/upload', formData)
+    async function testServer() {
+      const {data: res} = await selfServer.post('/upload', formData)
+      if (res.statusCode === 0) {
+        ElMessage({
+        message: '上传成功',
+        type: 'success'
+      })
+      }
     }
 
     // base64 编码
